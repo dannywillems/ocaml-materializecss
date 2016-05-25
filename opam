@@ -1,0 +1,22 @@
+opam-version: "1.2"
+name:         "ocaml-materializecss"
+maintainer:   "Danny Willems <contact@danny-willems.be>"
+author:       "Danny Willems <contact@danny-willems.be>"
+
+homepage:     "https://github.com/dannywillems/ocaml-materializecss"
+bug-reports:  "https://github.com/dannywillems/ocaml-materializecss/issues"
+
+dev-repo:     "https://github.com/dannywillems/ocaml-materializecss"
+
+license:      "LGPL-3.0 with OCaml linking exception"
+
+version:      "dev"
+
+build: [make "build"]
+install: [make "install"]
+remove: [make "remove"]
+
+depends: [
+  "js_of_ocaml"
+]
+available: [ ocaml-version >= "4.02.0" ]

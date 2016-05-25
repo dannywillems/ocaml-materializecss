@@ -1,0 +1,3 @@
+version = "dev"
+description = "Functions to create html elements with their respectives classes using MaterializeCSS framework"
+archive(byte) = "css_materialize.cma"
