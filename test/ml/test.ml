@@ -30,5 +30,6 @@ let onload _ =
   Dom.appendChild Dom_html.document##.body container;
   Js._false
 
-let _  = Dom_html.window##.onload := Dom.handler onload
+let _  =
+  Jsoo_lib.onload onload
 
