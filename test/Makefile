@@ -3,7 +3,8 @@ include Makefile.conf
 ################################################################################
 ############################## Variables #######################################
 ##### You don't need to change it.
-BYTE_FILES 					=	$(patsubst $(ML_DIRECTORY)/%.ml, $(ML_DIRECTORY)/%.byte, $(ML_FILES))
+CMO_FILES					=	$(patsubst $(ML_DIRECTORY)/%.ml, $(ML_DIRECTORY)/%.cmo, $(ML_FILES))
+CMI_FILES					=	$(patsubst $(ML_DIRECTORY)/%.ml, $(ML_DIRECTORY)/%.cmi, $(ML_FILES))
 TMP_OUT_BYTECODE			=	$(ML_DIRECTORY)/out.byte
 CC_CAML						=	ocamlc
 
@@ -26,9 +27,6 @@ else ifeq ($(USE_GEN_JS_API) $(DEBUG),False True)
 else
 	CC_JS = js_of_ocaml -o $(ML_JS_DIRECTORY)/$(ML_JS_OUTPUT_FILE) $(TMP_OUT_BYTECODE)
 endif
-
-CMO_FILES					=	$(patsubst $(ML_DIRECTORY)/%.ml, $(ML_DIRECTORY)/%.cmo, $(ML_FILES))
-CMI_FILES					=	$(patsubst $(ML_DIRECTORY)/%.ml, $(ML_DIRECTORY)/%.cmi, $(ML_FILES))
 
 ifeq ($(DEBUG),True)
 	LESSC	= lessc
@@ -68,13 +66,11 @@ else
 endif
 
 clean: clean_js_of_ocaml clean_css clean_css_minify
-	@echo "-----> Remove production directory list"
-	$(RM) -r $(PROD_DIRECTORY_LIST)
-	@echo "-----> Clean cordova"
 
 clean_js_of_ocaml:
 	@echo "-----> Remove ml compiled file"
-	$(RM) $(BYTE_FILES)
+	$(RM) $(TMP_OUT_BYTECODE)
+	$(RM) $(CMO_FILES) $(CMI_FILES)
 	$(RM) $(ML_JS_DIRECTORY)/$(ML_JS_OUTPUT_FILE)
 
 clean_css_minify:
@@ -87,7 +83,7 @@ clean_css:
 
 fclean: clean
 	# Don't remove the entire JS_OUTPUT_DIR.
-	$(RM) $(ML_JS_DIRECTORY)/$(JS_OUTPUT_FILE)
+	$(RM) $(ML_JS_DIRECTORY)/$(ML_JS_OUTPUT_FILE)
 
 ##### re
 re_css: clean_css css
