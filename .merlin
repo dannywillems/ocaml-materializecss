@@ -1,3 +1,7 @@
-S test/ml/*
+S test/ml/*.ml
 S *.ml
 S *.mli
+
+PKG js_of_ocaml
+PKG css_materialize
+PKG jsoo_lib

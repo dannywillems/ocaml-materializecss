@@ -2,7 +2,6 @@ include Makefile.conf
 
 ################################################################################
 CC				= ocamlc
-PACKAGES		= -package js_of_ocaml -package js_of_ocaml.ppx
 
 CMI_FILE		= $(patsubst %.mli, %.cmi, $(MLI_FILE))
 CMO_FILE		= $(patsubst %.mli, %.cmo, $(MLI_FILE))
