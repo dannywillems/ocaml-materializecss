@@ -18,5 +18,6 @@ remove: [make "remove"]
 
 depends: [
   "js_of_ocaml"
+  "jsoo_lib"
 ]
 available: [ ocaml-version >= "4.02.0" ]
