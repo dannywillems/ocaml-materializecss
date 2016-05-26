@@ -146,3 +146,225 @@ module Button =
       a
   end
 (* -------------------------------------------------------------------------- *)
+
+(* -------------------------------------------------------------------------- *)
+module Color =
+  struct
+    type t =
+      (* Red *)
+      | Red_lighten_5
+      | Red_lighten_4
+      | Red_lighten_3
+      | Red_lighten_2
+      | Red_lighten_1
+      | Red
+      | Red_darken_4
+      | Red_darken_3
+      | Red_darken_2
+      | Red_darken_1
+      | Red_accent_1
+      | Red_accent_2
+      | Red_accent_3
+      | Red_accent_4
+      (* Pink *)
+      | Pink_lighten_5
+      | Pink_lighten_4
+      | Pink_lighten_3
+      | Pink_lighten_2
+      | Pink_lighten_1
+      | Pink
+      | Pink_darken_4
+      | Pink_darken_3
+      | Pink_darken_2
+      | Pink_darken_1
+      | Pink_accent_1
+      | Pink_accent_2
+      | Pink_accent_3
+      | Pink_accent_4
+      (* Purple *)
+      | Purple_lighten_5
+      | Purple_lighten_4
+      | Purple_lighten_3
+      | Purple_lighten_2
+      | Purple_lighten_1
+      | Purple
+      | Purple_darken_4
+      | Purple_darken_3
+      | Purple_darken_2
+      | Purple_darken_1
+      | Purple_accent_1
+      | Purple_accent_2
+      | Purple_accent_3
+      | Purple_accent_4
+      (* Deep purple *)
+      | Deep_purple_lighten_5
+      | Deep_purple_lighten_4
+      | Deep_purple_lighten_3
+      | Deep_purple_lighten_2
+      | Deep_purple_lighten_1
+      | Deep_purple
+      | Deep_purple_darken_4
+      | Deep_purple_darken_3
+      | Deep_purple_darken_2
+      | Deep_purple_darken_1
+      | Deep_purple_accent_1
+      | Deep_purple_accent_2
+      | Deep_purple_accent_3
+      | Deep_purple_accent_4
+      (* Indigo *)
+      | Indigo_lighten_5
+      | Indigo_lighten_4
+      | Indigo_lighten_3
+      | Indigo_lighten_2
+      | Indigo_lighten_1
+      | Indigo
+      | Indigo_darken_4
+      | Indigo_darken_3
+      | Indigo_darken_2
+      | Indigo_darken_1
+      | Indigo_accent_1
+      | Indigo_accent_2
+      | Indigo_accent_3
+      | Indigo_accent_4
+      (* Blue *)
+      | Blue_lighten_5
+      | Blue_lighten_4
+      | Blue_lighten_3
+      | Blue_lighten_2
+      | Blue_lighten_1
+      | Blue
+      | Blue_darken_4
+      | Blue_darken_3
+      | Blue_darken_2
+      | Blue_darken_1
+      | Blue_accent_1
+      | Blue_accent_2
+      | Blue_accent_3
+      | Blue_accent_4
+      (* Light-blue *)
+      (* Cyan *)
+      (* Teal *)
+      (* Green *)
+      (* Light green *)
+      (* Lime *)
+      (* Yellow *)
+      (* Amber *)
+      (* Orange *)
+      (* Deep-orange *)
+      (* Brown !! No accent !! *)
+      (* Grey !! No accent !! *)
+      (* Blue-grey !! No accent !! *)
+      | Black
+      | White
+      | Transparent
+
+    let to_str s = match s with
+      (* Red *)
+      | Red_lighten_5           -> "red lighten-5"
+      | Red_lighten_4           -> "red lighten-4"
+      | Red_lighten_3           -> "red lighten-3"
+      | Red_lighten_2           -> "red lighten-2"
+      | Red_lighten_1           -> "red lighten-1"
+      | Red                     -> "red"
+      | Red_darken_4            -> "red darken-4"
+      | Red_darken_3            -> "red darken-3"
+      | Red_darken_2            -> "red darken-2"
+      | Red_darken_1            -> "red darken-1"
+      | Red_accent_1            -> "red accent-1"
+      | Red_accent_2            -> "red accent-2"
+      | Red_accent_3            -> "red accent-3"
+      | Red_accent_4            -> "red accent-4"
+      (* Pink *)
+      | Pink_lighten_5          -> "pink lighten-5"
+      | Pink_lighten_4          -> "pink lighten-4"
+      | Pink_lighten_3          -> "pink lighten-3"
+      | Pink_lighten_2          -> "pink lighten-2"
+      | Pink_lighten_1          -> "pink lighten-1"
+      | Pink                    -> "pink"
+      | Pink_darken_4           -> "pink darken-4"
+      | Pink_darken_3           -> "pink darken-3"
+      | Pink_darken_2           -> "pink darken-2"
+      | Pink_darken_1           -> "pink darken-1"
+      | Pink_accent_1           -> "pink accent-1"
+      | Pink_accent_2           -> "pink accent-2"
+      | Pink_accent_3           -> "pink accent-3"
+      | Pink_accent_4           -> "pink accent-4"
+      (* Purple *)
+      | Purple_lighten_5        -> "purple lighten-5"
+      | Purple_lighten_4        -> "purple lighten-4"
+      | Purple_lighten_3        -> "purple lighten-3"
+      | Purple_lighten_2        -> "purple lighten-2"
+      | Purple_lighten_1        -> "purple lighten-1"
+      | Purple                  -> "purple"
+      | Purple_darken_4         -> "purple darken-4"
+      | Purple_darken_3         -> "purple darken-3"
+      | Purple_darken_2         -> "purple darken-2"
+      | Purple_darken_1         -> "purple darken-1"
+      | Purple_accent_1         -> "purple accent-1"
+      | Purple_accent_2         -> "purple accent-2"
+      | Purple_accent_3         -> "purple accent-3"
+      | Purple_accent_4         -> "purple accent-4"
+      (* Deep purple *)
+      | Deep_purple_lighten_5   -> "deep-purple lighten-5"
+      | Deep_purple_lighten_4   -> "deep-purple lighten-4"
+      | Deep_purple_lighten_3   -> "deep-purple lighten-3"
+      | Deep_purple_lighten_2   -> "deep-purple lighten-2"
+      | Deep_purple_lighten_1   -> "deep-purple lighten-1"
+      | Deep_purple
+      | Deep_purple_darken_4    -> "deep-purple darken-4"
+      | Deep_purple_darken_3    -> "deep-purple darken-3"
+      | Deep_purple_darken_2    -> "deep-purple darken-2"
+      | Deep_purple_darken_1    -> "deep-purple darken-1"
+      | Deep_purple_accent_1    -> "deep-purple accent-1"
+      | Deep_purple_accent_2    -> "deep-purple accent-2"
+      | Deep_purple_accent_3    -> "deep-purple accent-3"
+      | Deep_purple_accent_4    -> "deep-purple accent-4"
+      (* Indigo *)
+      | Indigo_lighten_5        -> "indigo lighten-5"
+      | Indigo_lighten_4        -> "indigo lighten-4"
+      | Indigo_lighten_3        -> "indigo lighten-3"
+      | Indigo_lighten_2        -> "indigo lighten-2"
+      | Indigo_lighten_1        -> "indigo lighten-1"
+      | Indigo                  -> "indigo"
+      | Indigo_darken_4         -> "indigo darken-4"
+      | Indigo_darken_3         -> "indigo darken-3"
+      | Indigo_darken_2         -> "indigo darken-2"
+      | Indigo_darken_1         -> "indigo darken-1"
+      | Indigo_accent_1         -> "indigo accent-1"
+      | Indigo_accent_2         -> "indigo accent-2"
+      | Indigo_accent_3         -> "indigo accent-3"
+      | Indigo_accent_4         -> "indigo accent-4"
+      (* Blue *)
+      | Blue_lighten_5          -> "blue lighten-5"
+      | Blue_lighten_4          -> "blue lighten-4"
+      | Blue_lighten_3          -> "blue lighten-3"
+      | Blue_lighten_2          -> "blue lighten-2"
+      | Blue_lighten_1          -> "blue lighten-1"
+      | Blue                    -> "blue"
+      | Blue_darken_4           -> "blue darken-4"
+      | Blue_darken_3           -> "blue darken-3"
+      | Blue_darken_2           -> "blue darken-2"
+      | Blue_darken_1           -> "blue darken-1"
+      | Blue_accent_1           -> "blue accent-1"
+      | Blue_accent_2           -> "blue accent-2"
+      | Blue_accent_3           -> "blue accent-3"
+      | Blue_accent_4           -> "blue accent-4"
+      (* Light-blue *)
+      (* Cyan *)
+      (* Teal *)
+      (* Green *)
+      (* Light green *)
+      (* Lime *)
+      (* Yellow *)
+      (* Amber *)
+      (* Orange *)
+      (* Deep-orange *)
+      (* Brown !! No accent !! *)
+      (* Grey !! No accent !! *)
+      (* Blue-grey !! No accent !! *)
+      | Black                   -> "black"
+      | White                   -> "white"
+      | Transparent             -> "transparent"
+
+  end
+(* -------------------------------------------------------------------------- *)
