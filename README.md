@@ -18,6 +18,10 @@ opam pin add jsoo_lib https://github.com/dannywillems/jsoo-lib.git
 opam pin add ocaml-materializecss https://github.com/dannywillems/ocaml-materializecss.git
 ```
 
+## Example
+
+See the *test* directory to see an example.
+
 ## How to use it?
 
 All functions is in ```Css_materiliaze``` module. This main module contains
