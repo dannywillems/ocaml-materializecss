@@ -4,19 +4,19 @@ let onload _ =
   C.Head.add_css_materialize C.Head.Bower_css;
   C.Head.add_icons "fonts/materialize_fonts.css";
 
-  let container = C.create_container "" in
-  let row = C.create_row "" in
-  let col_large = C.create_col ~lg:3 "" in
-  let col_normal = C.create_col ~lg:3 "" in
+  let container = C.Grid.create_container "" in
+  let row = C.Grid.create_row "" in
+  let col_large = C.Grid.create_col ~lg:3 "" in
+  let col_normal = C.Grid.create_col ~lg:3 "" in
   let btn_large =
-    C.create_button ~size:C.Large ~effect:C.Light "Large and Light"
+    C.Button.create_button ~size:C.Button.Large ~effect:C.Button.Light "Large and Light"
   in
   let btn_normal =
-    C.create_button ~size:C.Normal ~effect:C.Waves "Normal and waves"
+    C.Button.create_button ~size:C.Button.Normal ~effect:C.Button.Waves "Normal and waves"
   in
 
   let btn_floating =
-    C.create_button ~size:C.Large ~effect:C.Light ~floating:true ~color:"red" ""
+    C.Button.create_button ~size:C.Button.Large ~effect:C.Button.Light ~floating:true ~color:"red" ""
   in
   let icon_add = C.Icon.create_icon "add" in
   Dom.appendChild btn_floating icon_add;
