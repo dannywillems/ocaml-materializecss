@@ -1,3 +1,5 @@
 *.cma
 *.cmo
 *.cmi
+test/js
+test/ml/out.byte
