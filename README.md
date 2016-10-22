@@ -1,5 +1,7 @@
 # ocaml-materializecss
 
+**ocaml-materializecss will be rewritten entirely with Eliom. This is WIP.**
+
 ![screenshot.png](res/screenshot.png)
 
 Create HTML elements in OCaml using Material Design with [MaterializeCSS](http://materializecss.com/).
