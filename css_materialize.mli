@@ -39,11 +39,13 @@ module Icon :
 (* -------------------------------------------------------------------------- *)
 module Grid :
   sig
-    val create_container  :   ?className:string           ->
+    val create_container  :   ?class_name:string           ->
+                              ?childs:#Dom.node Js.t list  ->
                               string                      ->
                               Dom_html.divElement Js.t
 
-    val create_row        :   ?className:string           ->
+    val create_row        :   ?class_name:string           ->
+                              ?childs:#Dom.node Js.t list  ->
                               string                      ->
                               Dom_html.divElement Js.t
 
@@ -53,7 +55,8 @@ module Grid :
                               ?offset_lg:int              ->
                               ?offset_md:int              ->
                               ?offset_xs:int              ->
-                              ?className:string           ->
+                              ?class_name:string           ->
+                              ?childs:#Dom.node Js.t list  ->
                               string                      ->
                               Dom_html.divElement Js.t
   end
@@ -71,7 +74,7 @@ module Button :
                               ?color:string               -> (* Use sum type !! *)
                               ?floating:bool              ->
                               ?flat:bool                  ->
-                              ?className:string           ->
+                              ?class_name:string           ->
                               string                      ->
                               Dom_html.anchorElement Js.t
   end
@@ -236,6 +239,93 @@ module Footer :
 (* Forms *)
 module Forms :
   sig
+    type input =
+      | Button
+      | Checkbox
+      | Color
+      | Date
+      | Datetime
+      | Datetime_local
+      | Email
+      | File
+      | Hidden
+      | Image
+      | Month
+      | Number
+      | Password
+      | Radio
+      | Range
+      | Reset
+      | Search
+      | Submit
+      | Tel
+      | Text
+      | Time
+      | Url
+      | Week
+
+    (*
+    val create_form         :   ?lg:int                     ->
+                                ?md:int                     ->
+                                ?xs:int                     ->
+                                ?offset_lg:int              ->
+                                ?offset_md:int              ->
+                                ?offset_xs:int              ->
+                                ?class_name:string          ->
+                                ?childs:#Dom.node Js.t list  ->
+                                string ->
+                                Dom_html.formElement Js.t
+    *)
+
+    val create_input_field  :   ?lg:int                             ->
+                                ?md:int                             ->
+                                ?xs:int                             ->
+                                ?offset_lg:int                      ->
+                                ?offset_md:int                      ->
+                                ?offset_xs:int                      ->
+                                ?class_name:string                  ->
+                                ?childs:#Dom.node Js.t list  ->
+                                string                              ->
+                                Dom_html.divElement Js.t
+
+    val create_input        :   ?id:string ->
+                                ?enable:bool ->
+                                ?placeholder:string ->
+                                ?value:string ->
+                                ?validate:bool ->
+                                ?class_name:string ->
+                                ?childs:#Dom.node Js.t list  ->
+                                input ->
+                                Dom_html.inputElement Js.t
+
+    val create_label        :   ?_for:string ->
+                                ?class_name:string ->
+                                ?active:bool ->
+                                ?data_error:string ->
+                                ?data_success:string ->
+                                ?childs:#Dom.node Js.t list  ->
+                                string ->
+                                Dom_html.labelElement Js.t
+
+    val create_textarea     :   ?id:string ->
+                                ?class_name:string ->
+                                ?autofocus:bool ->
+                                ?cols:int ->
+                                ?disabled:bool ->
+                                ?max_length:int ->
+                                ?placeholder:string ->
+                                ?read_only:bool ->
+                                ?rows:int ->
+                                ?required:bool ->
+                                unit ->
+                                Dom_html.textAreaElement Js.t
+
+    val create_switches     :   ?text_disable:string ->
+                                ?text_enable:string ->
+                                bool ->
+                                Dom_html.divElement Js.t
+
+
     (* See http://materializecss.com/forms.html *)
   end
 (* -------------------------------------------------------------------------- *)

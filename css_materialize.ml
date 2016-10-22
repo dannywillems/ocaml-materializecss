@@ -60,16 +60,18 @@ module Icon =
 (* -------------------------------------------------------------------------- *)
 module Grid =
   struct
-    let create_container ?(className="") content =
+    let create_container ?(class_name="") ?(childs=[]) content =
       let div = Dom_html.createDiv document in
       div##.innerHTML := Js.string content;
-      div##.className := Js.string ("container " ^ className);
+      div##.className := Js.string ("container " ^ class_name);
+      Jsoo_lib.Body.append_child_mult div childs;
       div
 
-    let create_row ?(className="") content =
+    let create_row ?(class_name="") ?(childs=[]) content =
       let div = Dom_html.createDiv document in
       div##.innerHTML := Js.string content;
-      div##.className := Js.string ("row " ^ className);
+      div##.className := Js.string ("row " ^ class_name);
+      Jsoo_lib.Body.append_child_mult div childs;
       div
 
     type col_size = Lg of int | Md of int | Xs of int
@@ -96,15 +98,22 @@ module Grid =
       | a::tail -> (col_offset_to_str a) ^ " " ^ (col_offset_list_to_str tail)
 
     (** Need an offset for each size. Need an array of screen_size *)
-    let create_col ?(lg=0) ?(md=0) ?(xs=0)
-      ?(offset_lg=0) ?(offset_md=0) ?(offset_xs=0) ?(className="") content =
+    let create_col    ?(lg=0)
+                      ?(md=0)
+                      ?(xs=0)
+                      ?(offset_lg=0)
+                      ?(offset_md=0)
+                      ?(offset_xs=0)
+                      ?(class_name="")
+                      ?(childs=[])
+                      content =
       let div = Dom_html.createDiv document in
       let size = (col_size_list_to_str [Lg lg ; Md md ; Xs xs]) in
       let offset = (col_offset_list_to_str [Lg offset_lg ; Md offset_md ; Xs offset_xs]) in
 
       div##.innerHTML := Js.string content;
-      div##.className := Js.string ("col " ^ size ^ " " ^ offset ^ " " ^ className);
-      (* Add class depending on offset and screen size *)
+      div##.className := Js.string ("col " ^ size ^ " " ^ offset ^ " " ^ class_name);
+      Jsoo_lib.Body.append_child_mult div childs;
       div
   end
 (* -------------------------------------------------------------------------- *)
@@ -138,11 +147,11 @@ module Button =
       (btn_flat_to_str flat)
 
     let create_button ?(size=Normal) ?(effect=No_effect) ?(enable=true)
-      ?(color="") ?(floating=false) ?(flat=false) ?(className="") content =
+      ?(color="") ?(floating=false) ?(flat=false) ?(class_name="") content =
       let a = Dom_html.createA document in
       a##.innerHTML := Js.string content;
       a##.className := Js.string ((btn_prop_to_str size effect enable floating flat) ^ " " ^
-      color ^ " " ^ className);
+      color ^ " " ^ class_name);
       a
   end
 (* -------------------------------------------------------------------------- *)
@@ -413,7 +422,155 @@ module Footer =
 (* Forms *)
 module Forms =
   struct
-    (* See http://materializecss.com/forms.html *)
+    type input =
+      | Button
+      | Checkbox
+      | Color
+      | Date
+      | Datetime
+      | Datetime_local
+      | Email
+      | File
+      | Hidden
+      | Image
+      | Month
+      | Number
+      | Password
+      | Radio
+      | Range
+      | Reset
+      | Search
+      | Submit
+      | Tel
+      | Text
+      | Time
+      | Url
+      | Week
+
+    let input_to_str i = match i with
+      | Button -> "button"
+      | Checkbox -> "checkbox"
+      | Color -> "color"
+      | Date -> "date"
+      | Datetime -> "datetime"
+      | Datetime_local -> "datetime-local"
+      | Email -> "email"
+      | File -> "file"
+      | Hidden -> "hidden"
+      | Image -> "image"
+      | Month -> "month"
+      | Number -> "number"
+      | Password -> "password"
+      | Radio -> "radio"
+      | Range -> "range"
+      | Reset -> "reset"
+      | Search -> "search"
+      | Submit -> "submit"
+      | Tel -> "tel"
+      | Text -> "text"
+      | Time -> "time"
+      | Url -> "url"
+      | Week -> "week"
+
+    (*
+    let create_forms
+      ?(lg=0) ?(md=0) ?(xs=0) ?(offset_lg=0) ?(offset_md=0) ?(offset_xs=0)
+      ?(class_name="") content =
+    *)
+
+    let create_input_field
+      ?(lg=0) ?(md=0) ?(xs=0) ?(offset_lg=0) ?(offset_md=0) ?(offset_xs=0)
+      ?(class_name="") ?(childs=[]) content =
+      Grid.create_col ~lg:lg ~md:md ~xs:xs ~offset_lg:offset_lg
+      ~offset_md:offset_md ~offset_xs:offset_xs
+      ~class_name:("input-field " ^  class_name) content
+
+    let create_input  ?(id="")
+                      ?(enable=true)
+                      ?(placeholder="")
+                      ?(value="")
+                      ?(validate=false)
+                      ?(class_name="")
+                      ?(childs=[])
+                      type_input =
+      let i = Dom_html.createInput ~_type:(Js.string (input_to_str
+      type_input)) document in
+      i##.id := Js.string id;
+      if not enable then i##setAttribute (Js.string "disabled") (Js.string "");
+      if placeholder <> "" then i##.placeholder := Js.string placeholder;
+      if value <> "" then i##.value := Js.string value;
+      if validate then i##.className := Js.string ("validate " ^ class_name);
+      i
+
+    let create_label  ?(_for="")
+                      ?(class_name="")
+                      ?(active=false)
+                      ?(data_error="")
+                      ?(data_success="")
+                      ?(childs=[])
+                      content =
+      let label = Dom_html.createLabel document in
+      label##setAttribute (Js.string "for") (Js.string _for);
+      if data_error <> "" then
+        label##setAttribute (Js.string "data-error") (Js.string data_error);
+      if data_success <> "" then
+        label##setAttribute (Js.string "data-success") (Js.string data_success);
+      if active then
+        label##.className := Js.string ("activate " ^ class_name)
+      else
+        label##.className := Js.string class_name;
+      label##.innerHTML := Js.string content;
+      label
+
+    let create_textarea ?(id="")
+                        ?(class_name="")
+                        ?(autofocus=false)
+                        ?(cols=0)
+                        ?(disabled=false)
+                        ?(max_length=0)
+                        ?(placeholder="")
+                        ?(read_only=false)
+                        ?(rows=0)
+                        ?(required=false) () =
+      let area = Dom_html.createTextarea document in
+      if id <> "" then area##.id := Js.string id;
+      area##.className := Js.string ("materialize-textarea " ^ class_name);
+      if autofocus then
+        area##setAttribute (Js.string "autofocus") (Js.string "");
+      if cols > 0 then area##.cols := cols;
+      area##.disabled := Js.bool disabled;
+      if max_length > 0 then
+        area##setAttribute
+          (Js.string "maxLength")
+          (Js.string (string_of_int max_length));
+      area##.readOnly := (Js.bool read_only);
+      area##.placeholder := Js.string placeholder;
+      if rows > 0 then area##.rows := rows;
+      area##.required := Js.bool required;
+      area
+
+    let create_lever =
+      let span = Dom_html.createSpan document in
+      span##.className := Js.string "lever";
+      span
+
+    let create_switches ?(text_disable="off")
+                        ?(text_enable="on")
+                        activated =
+      let div = Dom_html.createDiv document in
+      let off_element = Dom_html.createSpan document in
+      let on_element = Dom_html.createSpan document in
+      let label = Dom_html.createLabel document in
+      div##.className := Js.string "switch";
+      off_element##.innerHTML := (Js.string text_disable);
+      on_element##.innerHTML := (Js.string text_enable);
+
+      Dom.appendChild label off_element;
+      Dom.appendChild label (create_input ~enable:activated Checkbox);
+      Dom.appendChild label create_lever;
+      Dom.appendChild label on_element;
+      Dom.appendChild div label;
+      div
   end
 (* -------------------------------------------------------------------------- *)
 
