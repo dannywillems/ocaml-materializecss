@@ -1,7 +1,7 @@
 include Makefile.conf
 
 ################################################################################
-CC				= ocamlc
+CC				= eliomc -ppx
 
 CMI_FILE		= $(patsubst %.mli, %.cmi, $(MLI_FILE))
 CMO_FILE		= $(patsubst %.mli, %.cmo, $(MLI_FILE))
@@ -10,9 +10,9 @@ CMA_FILE		= $(patsubst %.mli, %.cma, $(MLI_FILE))
 
 ################################################################################
 build:
-	ocamlfind $(CC) -c $(PACKAGES) $(MLI_FILE)
-	ocamlfind $(CC) -c $(PACKAGES) $(ML_FILE)
-	ocamlfind $(CC) -a -o $(CMA_FILE) $(CMO_FILE)
+	$(CC) -c $(PACKAGES) $(MLI_FILE)
+	$(CC) -c $(PACKAGES) $(ML_FILE)
+	$(CC) -a -o $(CMA_FILE) $(CMO_FILE)
 
 install: build
 	ocamlfind install $(LIB_NAME) META $(CMA_FILE) $(CMI_FILE)

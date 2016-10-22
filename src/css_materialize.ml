@@ -1,10 +1,4 @@
 (* -------------------------------------------------------------------------- *)
-type doc = Dom_html.document Js.t
-
-let document = Dom_html.document
-(* -------------------------------------------------------------------------- *)
-
-(* -------------------------------------------------------------------------- *)
 module Head =
   struct
     type css_link     = Bower_css | Link_css of string
@@ -12,25 +6,25 @@ module Head =
     type js_link      = Bower_js | Link_js of string
 
     let add_css_materialize href  =
-      let l = match href with
+      let link = match href with
       | Bower_css -> "bower_components/Materialize/dist/css/materialize.min.css"
       | Link_css x -> x
-      in Jsoo_lib.Head.add_css_link l
+      in Eliom_content.Html.D.css_link [link]
 
     let add_js_jquery href =
-      let l = match href with
+      let link = match href with
       | Bower_jquery -> "bower_components/jquery/dist/jquery.min.js"
       | Link_jquery x -> x
-      in Jsoo_lib.Head.add_js_script l
+      in Eliom_content.Html.D.js_script [link]
 
     let add_js_materialize href =
-      let l = match href with
+      let link = match href with
       | Bower_js -> "bower_components/Materialize/dist/js/materialize.min.js"
       | Link_js x -> x
-      in Jsoo_lib.Head.add_js_script l
+      in Eliom_content.Html.D.js_script [link]
 
     let add_icons link =
-      Jsoo_lib.Head.add_link ~rel:Jsoo_lib.Head.Stylesheet link
+      Eliom_content.Html.D.css_link [link]
   end
 
 module Icon =
@@ -49,30 +43,24 @@ module Icon =
     | Large -> "large"
     | Normal -> ""
 
-    let create_icon ?(size=Normal) content =
-      let i = Dom_html.createI document in
-      i##.className := Js.string ((size_to_str size) ^ "material-icons");
-      i##.innerHTML := (Js.string content);
-      i
+    let create_icon ?(size=Normal) ?(a = []) ?(classes = []) content =
+      let size_as_str = size_to_str size in
+      Eliom_content.Html.D.i
+        ~a:((a_class (size_as_str :: "material-icons" :: classes)) :: a)
+        [pcdata content]
   end
 (* -------------------------------------------------------------------------- *)
 
 (* -------------------------------------------------------------------------- *)
 module Grid =
   struct
-    let create_container ?(class_name="") ?(childs=[]) content =
-      let div = Dom_html.createDiv document in
-      div##.innerHTML := Js.string content;
-      div##.className := Js.string ("container " ^ class_name);
-      Jsoo_lib.Body.append_child_mult div childs;
-      div
+    let create_container ?(classes = []) ?(a = []) () =
+      Eliom_content.Html.D.div
+        ~a:((a_class ("container" :: classes)) :: a)
 
-    let create_row ?(class_name="") ?(childs=[]) content =
-      let div = Dom_html.createDiv document in
-      div##.innerHTML := Js.string content;
-      div##.className := Js.string ("row " ^ class_name);
-      Jsoo_lib.Body.append_child_mult div childs;
-      div
+    let create_row ?(classes = []) ?(a = []) () =
+      Eliom_content.Html.D.div
+        ~a:((a_class ("row" :: classes)) :: a)
 
     type col_size = Lg of int | Md of int | Xs of int
 

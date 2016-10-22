@@ -4,14 +4,33 @@ val document : doc
 (* -------------------------------------------------------------------------- *)
 module Head :
   sig
-    type css_link     = Bower_css | Link_css of string
-    type jquery_link  = Bower_jquery | Link_jquery of string
-    type js_link      = Bower_js | Link_js of string
+    type css_link     =
+      | Bower_css
+      | Link_css of string
 
-    val add_css_materialize           :   css_link    -> unit
-    val add_js_jquery                 :   jquery_link -> unit
-    val add_js_materialize            :   js_link     -> unit
-    val add_icons                     :   string      -> unit
+    type jquery_link  =
+      | Bower_jquery
+      | Link_jquery of string
+
+    type js_link      =
+      | Bower_js
+      | Link_js of string
+
+    val add_css_materialize           :
+      css_link    ->
+      Eliom_content.Html.D.link
+
+    val add_js_jquery                 :
+      jquery_link ->
+      Eliom_content.Html.D.script
+
+    val add_js_materialize            :
+      js_link     ->
+      Eliom_content.Html.D.script
+
+    val add_icons                     :
+      string      ->
+      Eliom_content.Html.D.link
   end
 (* -------------------------------------------------------------------------- *)
 
@@ -32,19 +51,25 @@ module Icon :
       | Info_outline
     *)
 
-    val create_icon : ?size:size -> string -> Dom_html.element Js.t
+    val create_icon :
+      ?size:size                                            ->
+      ?a:Html_types.i_attrib Eliom_content.Html.attrib list ->
+      ?classes:string list                                  ->
+      string                                                ->
+      Eliom_content.Html.D.i
   end
 (* -------------------------------------------------------------------------- *)
 
 (* -------------------------------------------------------------------------- *)
 module Grid :
   sig
-    val create_container  :   ?class_name:string           ->
-                              ?childs:#Dom.node Js.t list  ->
-                              string                      ->
-                              Dom_html.divElement Js.t
+    val create_container  :   ?classes:string list          ->
+                              ?a:Html_types.div_attrib Eliom_content.Html.attrib
+                              list                          ->
+                              unit                          ->
+                              Eliom_content.Html.D.div
 
-    val create_row        :   ?class_name:string           ->
+    val create_row        :   ?class_name:string            ->
                               ?childs:#Dom.node Js.t list  ->
                               string                      ->
                               Dom_html.divElement Js.t
